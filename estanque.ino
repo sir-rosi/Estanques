@@ -7,6 +7,9 @@ int pos = 0;
 
 int flota1=2;
 int flota2=3;
+int rojo=4;
+int verde=5;
+int emergencia=6;
 int servo1=9;
 int servo2=10;
 int servo3=11;
@@ -15,7 +18,7 @@ int motor=13;
 Servo valv1;  //se define a la valvula 1 como variable servo
 Servo valv2;  //se define a la valvula 2 como variable servo
 Servo valv3;  //se define a la valvula 3 como variable servo
-float adc0, temp, mV; //se declaran variables para los sensores de temperatura
+float adc2, temp2, mV2; //se declaran variables para los sensores de temperatura
 float adc1,temp1,mV1;
 
 long readUltrasonicDistance(int triggerPin, int echoPin)
@@ -34,8 +37,9 @@ long readUltrasonicDistance(int triggerPin, int echoPin)
 
 
 void setup() {
-    pinMode(2,OUTPUT);    //configura pin 2 como salida
-    pinMode(3,OUTPUT);    //configura pin 3 como salida digital
+    pinMode(rojo,OUTPUT);    //configura pin 2 como salida
+    pinMode(verde,OUTPUT);    //configura pin 3 como salida digital
+    pinMode(emergencia,INPUT);
     valv1.attach(servo1);
     valv2.attach(servo2);
     valv3.attach(servo3);
@@ -73,15 +77,15 @@ void loop() {
    
     }
   }
-  adc0 = analogRead(0);   //se lee señal analogica 0-1023 (cambias A0)
-  mV= (adc0*5)/1024;      //se convierte valor digital a mV
-  temp = mV * 100;        //convertimos los mV a temp
+  adc2 = analogRead(2);   //se lee señal analogica 0-1023 (cambias A0)
+  mV2= (adc2*5)/1024;      //se convierte valor digital a mV
+  temp2 = mV2 * 100;        //convertimos los mV a temp
 
-  if(temp < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
+  if(temp2 < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
   {
     valv3.write(cerrar);
   }
-    if(temp >=80)  //si la temperatura es mayor o igual a 80 se abre la valvula 3
+    if(temp2 >=80)  //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
     valv3.write(abrir);
   }
