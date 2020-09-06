@@ -53,10 +53,10 @@ void loop() {
 
   if(temp < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
   {
-    valv3.write(0);
+    valv3.write(cerrar);
   }
     if(temp >=80)  //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
-    valv3.write(180);
+    valv3.write(abrir);
   }
 }
