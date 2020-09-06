@@ -2,13 +2,21 @@
 int abrir = 180;
 int cerrar = 0;
 int pos = 0; 
+
+//INICIO BLOQUE DE CONEXION
+
+int flota1=2;
+int flota2=3;
 int servo1=9;
 int servo2=10;
 int servo3=11;
 int motor=13;
+// FIN BLOQUE DE CONEXION
 Servo valv1;  //se define a la valvula 1 como variable servo
 Servo valv2;  //se define a la valvula 2 como variable servo
 Servo valv3;  //se define a la valvula 3 como variable servo
+float adc0, temp, mV; //se declaran variables para los sensores de temperatura
+float adc1,temp1,mV1;
 
 long readUltrasonicDistance(int triggerPin, int echoPin)
 {
@@ -24,7 +32,6 @@ long readUltrasonicDistance(int triggerPin, int echoPin)
   return pulseIn(echoPin, HIGH);
 }
 
-float adc0, temp, mV; //se declaran variables para sensor de temperatura
 
 void setup() {
     pinMode(2,OUTPUT);    //configura pin 2 como salida
@@ -35,8 +42,9 @@ void setup() {
 }
 
 void loop() {
-  float estanque1 = 0.01723 * readUltrasonicDistance(2, 2);
-  float estanque2 = 0.01723 * readUltrasonicDistance(3, 3);
+  float estanque1 = 0.01723 * readUltrasonicDistance(flota1, flota1);
+  float estanque2 = 0.01723 * readUltrasonicDistance(flota2, flota2);
+
   if (estanque1>30); //
   {
     valv1(abrir);//--|
@@ -48,6 +56,11 @@ void loop() {
     digitalWrite(motor,HIGH);
     delay(10000);
     digitalWrite(motor,LOW);
+    // medicion temperatura estanque 1
+    adc1 = analogRead(1);   //
+    mV1= (adc1*5)/1024;      //
+    temp1 = mV1 * 100; 
+    //
     if (estanque2<30)
     {
     valv2(cerrar);
@@ -57,7 +70,7 @@ void loop() {
     valv2(abierta);
     }
   }
-  adc0 = analogRead(0);   //se lee señal analogica 0-1023
+  adc0 = analogRead(0);   //se lee señal analogica 0-1023 (cambias A0)
   mV= (adc0*5)/1024;      //se convierte valor digital a mV
   temp = mV * 100;        //convertimos los mV a temp
 
