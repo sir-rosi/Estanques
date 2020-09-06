@@ -1,8 +1,11 @@
 #include <Servo.h> //librería para servo motor
+int abrir = 180;
+int cerrar = 0;
 int pos = 0; 
 int servo1=9;
 int servo2=10;
 int servo3=11;
+int motor=13;
 Servo valv1;  //se define a la valvula 1 como variable servo
 Servo valv2;  //se define a la valvula 2 como variable servo
 Servo valv3;  //se define a la valvula 3 como variable servo
@@ -32,14 +35,17 @@ void setup() {
 }
 
 void loop() {
-  float distancia = 0.01723 * readUltrasonicDistance(2, 2);
-  if (distancia=100)  
+  float estanque1 = 0.01723 * readUltrasonicDistance(2, 2);
+  float estanque2 = 0.01723 * readUltrasonicDistance(3,3);
+  if (estanque1>30); //
   {
-    valv2(1);
+    valv1(abrir);//--|
+    valv2(cerrar);//-| llenar estanque 1 
   }
   else (
   {
-    valv2(0);
+    valv1(cerrar);// estanque lleno
+    digitalWrite(motor,HIGH);
   }
   adc0 = analogRead(0);   //se lee señal analogica 0-1023
   mV= (adc0*5)/1024;      //se convierte valor digital a mV
