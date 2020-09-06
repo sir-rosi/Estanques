@@ -54,20 +54,23 @@ void loop() {
   {
     valv1(cerrar);// estanque lleno
     digitalWrite(motor,HIGH);
-    delay(10000);
+    While(temp<=40){
+      delay(30);
+    }
     digitalWrite(motor,LOW);
     // medicion temperatura estanque 1
     adc1 = analogRead(1);   //
     mV1= (adc1*5)/1024;      //
     temp1 = mV1 * 100; 
     //
-    if (estanque2<30)
+    if (estanque2>30 && temp1>=40)
     {
-    valv2(cerrar);
+     valv2(abrir);
     }
     else 
     {
-    valv2(abierta);
+      valv2(cerrar);
+   
     }
   }
   adc0 = analogRead(0);   //se lee señal analogica 0-1023 (cambias A0)
@@ -76,10 +79,10 @@ void loop() {
 
   if(temp < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
   {
-    valv3.write(0);
+    valv3.write(cerrar);
   }
     if(temp >=80)  //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
-    valv3.write(180);
+    valv3.write(abrir);
   }
 }
