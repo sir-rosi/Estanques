@@ -12,8 +12,8 @@ void setup() {
     pinMode(2,OUTPUT);    //configura pin 2 como salida
     pinMode(3,OUTPUT);    //configura pin 3 como salida digital
     valv1.attach(servo1);
-      valv2.attach(servo2);
-      valv3.attach(servo3);
+    valv2.attach(servo2);
+    valv3.attach(servo3);
 }
 
 void loop() {
