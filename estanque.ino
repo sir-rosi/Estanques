@@ -36,7 +36,7 @@ void setup() {
 
 void loop() {
   float estanque1 = 0.01723 * readUltrasonicDistance(2, 2);
-  float estanque2 = 0.01723 * readUltrasonicDistance(3,3);
+  float estanque2 = 0.01723 * readUltrasonicDistance(3, 3);
   if (estanque1>30); //
   {
     valv1(abrir);//--|
@@ -46,6 +46,8 @@ void loop() {
   {
     valv1(cerrar);// estanque lleno
     digitalWrite(motor,HIGH);
+    delay(10000);
+    valv2(abrir);
   }
   adc0 = analogRead(0);   //se lee señal analogica 0-1023
   mV= (adc0*5)/1024;      //se convierte valor digital a mV
@@ -53,10 +55,10 @@ void loop() {
 
   if(temp < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
   {
-    valv3.write(cerrar);
+    valv3.write(0);
   }
     if(temp >=80)  //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
-    valv3.write(abrir);
+    valv3.write(180);
   }
 }
