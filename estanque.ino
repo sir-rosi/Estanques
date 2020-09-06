@@ -47,7 +47,15 @@ void loop() {
     valv1(cerrar);// estanque lleno
     digitalWrite(motor,HIGH);
     delay(10000);
-    valv2(abrir);
+    digitalWrite(motor,LOW);
+    if (estanque2<30)
+    {
+    valv2(cerrar);
+    }
+    else 
+    {
+    valv2(abierta);
+    }
   }
   adc0 = analogRead(0);   //se lee señal analogica 0-1023
   mV= (adc0*5)/1024;      //se convierte valor digital a mV
