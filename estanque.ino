@@ -38,9 +38,10 @@ long readUltrasonicDistance(int triggerPin, int echoPin)
 
 
 void setup() {
-    pinMode(rojo,OUTPUT);    //configura pin 2 como salida
-    pinMode(verde,OUTPUT);    //configura pin 3 como salida digital
-    pinMode(emergencia,INPUT);
+    pinMode(rojo,OUTPUT);        //configura pin 2 como salida digital
+    pinMode(verde,OUTPUT);       //configura pin 3 como salida digital
+    pinMode(emergencia,INPUT);   //configura boton emergencia como entrada digital
+    pinMode(motor, LOW);         // Condición inicial del motor (apagado)
     valv1.attach(servo1);
     valv2.attach(servo2);
     valv3.attach(servo3);
@@ -49,7 +50,11 @@ void setup() {
 
 void loop() {
   float estanque1 = 0.01723 * readUltrasonicDistance(flota1, flota1);
+  Serial.print("estanque1: ");
+  Serial.println(estanque1);
   float estanque2 = 0.01723 * readUltrasonicDistance(flota2, flota2);
+  Serial.print("estanque2: ");
+  Serial.println(estanque2);
 
   if (estanque1>30) //
   {
