@@ -23,7 +23,7 @@ int boton=7;
 Servo valv1;  //se define a la valvula 1 como variable servo
 Servo valv2;  //se define a la valvula 2 como variable servo
 Servo valv3;  //se define a la valvula 3 como variable servo
-float adc1,temp1,mV1; //se declaran variables para los sensores de temperatura estanque 1
+float adc1, temp1, mV1; //se declaran variables para los sensores de temperatura estanque 1
 float adc2, temp2, mV2; //se declaran variables para los sensores de temperatura estanque 2
 
 long readUltrasonicDistance(int triggerPin, int echoPin) // función que permite lectura de los sensores de proximidad.
