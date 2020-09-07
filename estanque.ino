@@ -5,15 +5,16 @@ int pos = 0;
 
 //INICIO BLOQUE DE CONEXION
 
-int flota1=2;
-int flota2=3;
-int rojo=4;
-int verde=5;
-int emergencia=6;
+int flota1=13;
+int flota2=12;
+int rojo=2;
+int verde=4;
+int emergencia=7;
 int servo1=9;
 int servo2=10;
 int servo3=11;
-int motor=13;
+int motor=8;
+
 // FIN BLOQUE DE CONEXION
 Servo valv1;  //se define a la valvula 1 como variable servo
 Servo valv2;  //se define a la valvula 2 como variable servo
@@ -49,16 +50,16 @@ void loop() {
   float estanque1 = 0.01723 * readUltrasonicDistance(flota1, flota1);
   float estanque2 = 0.01723 * readUltrasonicDistance(flota2, flota2);
 
-  if (estanque1>30); //
+  if (estanque1>30) //
   {
-    valv1(abrir);//--|
-    valv2(cerrar);//-| llenar estanque 1 
+    valv1.write(abrir);//--|
+    valv2.write(cerrar);//-| llenar estanque 1 
   }
-  else (
+  else
   {
-    valv1(cerrar);// estanque lleno
+    valv1.write(cerrar);// estanque lleno
     digitalWrite(motor,HIGH);
-    While(temp<=40){
+    while(temp1<=40){
       delay(30);
     }
     digitalWrite(motor,LOW);
@@ -69,11 +70,11 @@ void loop() {
     //
     if (estanque2>30 && temp1>=40)
     {
-     valv2(abrir);
+     valv2.write(abrir);
     }
     else 
     {
-      valv2(cerrar);
+      valv2.write(cerrar);
    
     }
   }
