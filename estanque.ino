@@ -43,9 +43,6 @@ long readUltrasonicDistance(int triggerPin, int echoPin) // función que permite
 
 void setup() {
         
-    pinMode(rojo,OUTPUT);        //configura pin 2 como salida digital
-    pinMode(verde,OUTPUT);       //configura pin 3 como salida digital
-    pinMode(emergencia,INPUT);   //configura boton emergencia como entrada digital
     pinMode(motor, LOW);         // Condición inicial del motor (apagado)
     valv1.attach(servo1);        // Asignación de pin para la válvula 1
     valv2.attach(servo2);        // Asignación de pin para la válvula 2
@@ -89,7 +86,7 @@ void loop() {
       Serial.println(temp1);    // Se imprime valor de temperatura de temperatura
       delay(30);
     }
-    digitalWrite(rojo, LOW);
+    digitalWrite(rojo1, LOW);
     digitalWrite(motor,LOW);    // se para el motor cuando se alcanza la temperatura de pre calentado
  
     if (estanque2>30 && temp1>=40) // condición de llenado de estanque 2 
@@ -117,6 +114,7 @@ void loop() {
   }
     if(temp2 >=80)              //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
+    digitalWrite(rojo2, LOW);  
     valv3.write(abrir);
   }
   }
