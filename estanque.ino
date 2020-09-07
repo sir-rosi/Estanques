@@ -66,15 +66,16 @@ void loop() {
     valv1.write(cerrar);// estanque lleno
     digitalWrite(motor,HIGH);
     while(temp1<=40){
+      adc1 = analogRead(A0);   //
+      mV1= (adc1*5)/1024;      //
+      temp1 = ((mV1 * 100)-50.541)/0.9904; //con factor de correccion
       Serial.print("la temperatura es: ");
       Serial.println(temp1);
       delay(30);
     }
     digitalWrite(motor,LOW);
     // medicion temperatura estanque 1
-    adc1 = analogRead(A0);   //
-    mV1= (adc1*5)/1024;      //
-    temp1 = mV1 * 100; 
+ 
     //
     if (estanque2>30 && temp1>=40)
     {
@@ -88,7 +89,7 @@ void loop() {
   }
   adc2 = analogRead(A1);   //se lee señal analogica 0-1023 (cambias A0)
   mV2= (adc2*5)/1024;      //se convierte valor digital a mV
-  temp2 = mV2 * 100;        //convertimos los mV a temp
+  temp2 = ((mV2 * 100)-50.541)/0.9904;         //convertimos los mV a temp
   Serial.print("la temperatura 2.0: ");
   Serial.println(temp2);
   if(temp2 < 80)   //si la temperatura es menor a 80 se cierra la valvula 3
