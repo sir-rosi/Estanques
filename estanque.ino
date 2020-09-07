@@ -8,13 +8,16 @@ int cerrar = 0;
 
 int flota1=13; // simula flotador en el estanque 1
 int flota2=12; // simula flotador en el estanque 2
-int rojo=2;
-int verde=4;
+int rojo1=2;
+int azul1=3;
+int rojo2=4;
+int azul2=5;
 int emergencia=7;
 int servo1=9;
 int servo2=10;
 int servo3=11;
 int motor=8;
+int boton=7;
 
 // FIN BLOQUE DE CONEXION
 Servo valv1;  //se define a la valvula 1 como variable servo
@@ -48,10 +51,17 @@ void setup() {
     valv2.attach(servo2);        // Asignación de pin para la válvula 2
     valv3.attach(servo3);        // Asignación de pin para la válvula 3
     Serial.begin(9600);
+    valv1.write(cerrar);
+  	valv2.write(cerrar);
+    valv3.write(cerrar);
+  	pinMode(azul1, LOW);
+    pinMode(rojo1, LOW);
+    pinMode(azul2, LOW);
+    pinMode(rojo2, LOW);
 }
 
 void loop() {
-        
+  if (digitalRead(boton)==True){      
   float estanque1 = 0.01734 * readUltrasonicDistance(flota1, flota1); // se calibra lectura de distancia y se asigna a estanque 1
   Serial.print("estanque1: ");
   Serial.println(estanque1);    // se imprime el valor de la distancia en estanque 1
@@ -61,12 +71,15 @@ void loop() {
 
   if (estanque1>30)             // Condición de llenado para estanque 1, 
   {
+    digitalWrite(azul1, HIGH);   // Enciende luz1 azul para indicar que se está llenando
     valv1.write(abrir);         // Se abre la válvula 1 para ingreso de líquido
     valv2.write(cerrar);        // se cierra la válvula 2 para llenar estanque 1 
   }
   else                          // Estanque capacidad máxima
   {
     valv1.write(cerrar);        // se cierra la válvula 1
+    digitalWrite(azul1, LOW);
+    digitalWrite(rojo1, HIGH);  // Luz roja1 indica que el estaque 1 se llenó
     digitalWrite(motor,HIGH);   // Gira motor para revolver contenido estanque 1
     while(temp1<=40){           // Ciclo while para precalentado del contenido del estanque 1
       adc1 = analogRead(A0);    // Se lee señal analogica 0-1023 (cambias A0)
@@ -76,14 +89,18 @@ void loop() {
       Serial.println(temp1);    // Se imprime valor de temperatura de temperatura
       delay(30);
     }
+    digitalWrite(rojo, LOW);
     digitalWrite(motor,LOW);    // se para el motor cuando se alcanza la temperatura de pre calentado
  
     if (estanque2>30 && temp1>=40) // condición de llenado de estanque 2 
     {
+     digitalWrite(azul2, HIGH);  //Enciende luz azul2 para indicar que el estanque 2 se está llenando
      valv2.write(abrir);        // se abre válvula 2 (ingresa fluido a estanque 2)
     }
     else                        // si no se cumple la condición anterior, seguirá cerrada la válvula 2
     {
+      digitalWrite(azul2, LOW);
+      digitalWrite(rojo2, HIGH);  // Luz roja2 indica que el estanque 2 se llenó
       valv2.write(cerrar);
    
     }
@@ -101,5 +118,6 @@ void loop() {
     if(temp2 >=80)              //si la temperatura es mayor o igual a 80 se abre la valvula 3
   {
     valv3.write(abrir);
+  }
   }
 }
