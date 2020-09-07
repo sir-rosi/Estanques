@@ -49,10 +49,10 @@ void setup() {
 }
 
 void loop() {
-  float estanque1 = 0.01723 * readUltrasonicDistance(flota1, flota1);
+  float estanque1 = 0.01734 * readUltrasonicDistance(flota1, flota1);
   Serial.print("estanque1: ");
   Serial.println(estanque1);
-  float estanque2 = 0.01723 * readUltrasonicDistance(flota2, flota2);
+  float estanque2 = 0.01734 * readUltrasonicDistance(flota2, flota2);
   Serial.print("estanque2: ");
   Serial.println(estanque2);
 
