@@ -58,7 +58,7 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(boton)==True){      
+  if (digitalRead(boton)==true){      
   float estanque1 = 0.01734 * readUltrasonicDistance(flota1, flota1); // se calibra lectura de distancia y se asigna a estanque 1
   Serial.print("estanque1: ");
   Serial.println(estanque1);    // se imprime el valor de la distancia en estanque 1
