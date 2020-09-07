@@ -12,6 +12,7 @@ int rojo1=2;
 int azul1=3;
 int rojo2=4;
 int azul2=5;
+int LuzMotor=6;
 int emergencia=7;
 int servo1=9;
 int servo2=10;
@@ -55,6 +56,7 @@ void setup() {
     pinMode(rojo1, LOW);
     pinMode(azul2, LOW);
     pinMode(rojo2, LOW);
+    pinMode(LuzMotor, LOW);
 }
 
 void loop() {
@@ -78,6 +80,7 @@ void loop() {
     digitalWrite(azul1, LOW);
     digitalWrite(rojo1, HIGH);  // Luz roja1 indica que el estaque 1 se llenó
     digitalWrite(motor,HIGH);   // Gira motor para revolver contenido estanque 1
+    digitalWrite(LuzMotor, HIGH);
     while(temp1<=40){           // Ciclo while para precalentado del contenido del estanque 1
       adc1 = analogRead(A0);    // Se lee señal analogica 0-1023 (cambias A0)
       mV1= (adc1*5)/1024;       // Conversión de valor digital a mV
@@ -87,8 +90,9 @@ void loop() {
       delay(30);
     }
     digitalWrite(rojo1, LOW);
-    digitalWrite(motor,LOW);    // se para el motor cuando se alcanza la temperatura de pre calentado
- 
+    digitalWrite(motor, LOW);    // se para el motor cuando se alcanza la temperatura de pre calentado
+    digitalWrite(LuzMotor, LOW);
+    
     if (estanque2>30 && temp1>=40) // condición de llenado de estanque 2 
     {
      digitalWrite(azul2, HIGH);  //Enciende luz azul2 para indicar que el estanque 2 se está llenando
