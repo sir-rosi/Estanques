@@ -60,6 +60,8 @@ void setup() {
 }
 
 void loop() {
+  // MEDICION DE FLOTADORES
+  
   if (digitalRead(boton)==true){      
   float estanque1 = 0.01734 * readUltrasonicDistance(flota1, flota1); // se calibra lectura de distancia y se asigna a estanque 1
   Serial.print("estanque1: ");
@@ -67,21 +69,26 @@ void loop() {
   float estanque2 = 0.01734 * readUltrasonicDistance(flota2, flota2); // se calibra lectura de distancia y se asigna a estanque 1
   Serial.print("estanque2: ");
   Serial.println(estanque2);    // se imprime el valor de la distancia en estanque
-
+  // FIN MEDICION DE FLOTADORES 
+  //ESTANQUE 1 
   if (estanque1>30)             // Condición de llenado para estanque 1, 
   {
     digitalWrite(azul1, HIGH);   // Enciende luz1 azul para indicar que se está llenando
     valv1.write(abrir);         // Se abre la válvula 1 para ingreso de líquido
     valv2.write(cerrar);        // se cierra la válvula 2 para llenar estanque 1 
   }
-  else                          // Estanque capacidad máxima
+  //FIN DE LLENADO ESTANQUE 1
+  if(estanque1<=30)                          // Estanque capacidad máxima
   {
     valv1.write(cerrar);        // se cierra la válvula 1
-    digitalWrite(azul1, LOW);
-    digitalWrite(rojo1, HIGH);  // Luz roja1 indica que el estaque 1 se llenó
-    digitalWrite(motor,HIGH);   // Gira motor para revolver contenido estanque 1
-    digitalWrite(LuzMotor, HIGH);
+    adc1 = analogRead(A0);    // Se lee señal analogica 0-1023 (cambias A0)
+    mV1= (adc1*5)/1024;       // Conversión de valor digital a mV
+    temp1 = ((mV1 * 100)-50.541)/0.9904;
     while(temp1<=40){           // Ciclo while para precalentado del contenido del estanque 1
+      digitalWrite(azul1, LOW);
+      digitalWrite(rojo1, HIGH);  // Luz roja1 indica que el estaque 1 se llenó
+      digitalWrite(motor,HIGH);   // Gira motor para revolver contenido estanque 1
+      digitalWrite(LuzMotor, HIGH);
       adc1 = analogRead(A0);    // Se lee señal analogica 0-1023 (cambias A0)
       mV1= (adc1*5)/1024;       // Conversión de valor digital a mV
       temp1 = ((mV1 * 100)-50.541)/0.9904; //Calibración de sensor de temperatura. Convertimos los mV a temp
@@ -92,20 +99,24 @@ void loop() {
     digitalWrite(rojo1, LOW);
     digitalWrite(motor, LOW);    // se para el motor cuando se alcanza la temperatura de pre calentado
     digitalWrite(LuzMotor, LOW);
-    
-    if (estanque2>30 && temp1>=40) // condición de llenado de estanque 2 
-    {
+  }
+  // ESTANQUE 1  LLENO
+  // ESTANQUE 2  
+  while(estanque2>30 && temp1>=40) // condición de llenado de estanque 2 
+   {
      digitalWrite(azul2, HIGH);  //Enciende luz azul2 para indicar que el estanque 2 se está llenando
-     valv2.write(abrir);        // se abre válvula 2 (ingresa fluido a estanque 2)
-    }
-    else                        // si no se cumple la condición anterior, seguirá cerrada la válvula 2
-    {
+     valv2.write(abrir);
+     estanque2 = 0.01734 * readUltrasonicDistance(flota2, flota2); // se abre válvula 2 (ingresa fluido a estanque 2)
+   }
+  // FIN LLENADO ESTANQUE 2 
+  if(estanque2<=30)                        // si no se cumple la condición anterior, seguirá cerrada la válvula 2
+   {
       digitalWrite(azul2, LOW);
       digitalWrite(rojo2, HIGH);  // Luz roja2 indica que el estanque 2 se llenó
       valv2.write(cerrar);
    
-    }
-  }
+   }
+  //ESTANQUE 2 LLENO
   adc2 = analogRead(A1);        // Se lee señal analogica 0-1023 (cambias A1)
   mV2= (adc2*5)/1024;           // Se convierte valor digital a mV
   temp2 = ((mV2 * 100)-50.541)/0.9904;    //Calibración de sensor de temperatura. Convertimos los mV a temp
